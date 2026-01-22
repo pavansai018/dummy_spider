@@ -1,0 +1,176 @@
+<?xml version="1.0"?>
+<robot name="dummy_spider" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <material name="red"><color rgba="0.8 0.1 0.1 1"/></material>
+  <material name="black"><color rgba="0.1 0.1 0.1 1"/></material>
+  <material name="grey"><color rgba="0.4 0.4 0.4 1"/></material>
+  <material name="orange"><color rgba="1 0.5 0 1"/></material>
+
+  <link name="base_link">
+    <visual>
+      <geometry><box size="0.095 0.095 0.005"/></geometry>
+      <material name="red"/>
+    </visual>
+    <collision>
+      <geometry><box size="0.095 0.095 0.005"/></geometry>
+    </collision>
+    <inertial>
+      <mass value="0.3"/>
+      <inertia ixx="0.0002" ixy="0" ixz="0" iyy="0.0002" iyz="0" izz="0.0004"/>
+    </inertial>
+  </link>
+
+  <link name="bottom_plate">
+    <visual>
+      <geometry><box size="0.095 0.095 0.004"/></geometry>
+      <material name="black"/>
+    </visual>
+    <collision>
+      <geometry><box size="0.095 0.095 0.004"/></geometry>
+    </collision>
+    <inertial>
+      <mass value="0.2"/>
+      <inertia ixx="0.00015" ixy="0" ixz="0" iyy="0.00015" iyz="0" izz="0.0003"/>
+    </inertial>
+  </link>
+
+  <joint name="chassis_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="bottom_plate"/>
+    <origin xyz="0 0 -0.0405" rpy="0 0 0"/> 
+  </joint>
+
+  <link name="camera_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><box size="0.015 0.015 0.015"/></geometry>
+      <material name="black"/>
+    </visual>
+  </link>
+
+  <joint name="camera_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="camera_link"/>
+    <origin xyz="0.04 0 0.02" rpy="0 0 0"/>
+  </joint>
+
+  <gazebo reference="camera_link">
+    <sensor type="camera" name="spider_camera">
+      <update_rate>30.0</update_rate>
+      <visualize>true</visualize>
+      <topic>camera/image_raw</topic>
+      <camera name="head">
+        <horizontal_fov>2.094</horizontal_fov> 
+        <image>
+          <width>1280</width>
+          <height>720</height>
+          <format>R8G8B8</format>
+        </image>
+        <clip>
+          <near>0.01</near>
+          <far>100</far>
+        </clip>
+      </camera>
+    </sensor>
+  </gazebo>
+
+  <gazebo>
+    <plugin filename="gz-sim-sensors-system" name="gz::sim::systems::Sensors">
+      <render_engine>ogre2</render_engine>
+    </plugin>
+  </gazebo>
+
+  <xacro:macro name="spider_leg" params="prefix x_dist y_dist yaw_angle">
+    
+    <link name="${prefix}_hip">
+      <visual>
+        <geometry><cylinder radius="0.0165" length="0.036"/></geometry>
+        <material name="orange"/>
+      </visual>
+      <collision>
+        <geometry><cylinder radius="0.0165" length="0.036"/></geometry>
+      </collision>
+      <inertial><mass value="0.05"/><inertia ixx="1e-4" ixy="0" ixz="0" iyy="1e-4" iyz="0" izz="1e-4"/></inertial>
+    </link>
+
+    <joint name="${prefix}_hip_yaw" type="revolute">
+      <parent link="base_link"/>
+      <child link="${prefix}_hip"/>
+      <origin xyz="${x_dist} ${y_dist} -0.0205" rpy="0 0 ${yaw_angle}"/>
+      <axis xyz="0 0 1"/>
+      <limit lower="-1.57" upper="1.57" effort="5.0" velocity="2.0"/>
+    </joint>
+
+    <link name="${prefix}_limb">
+      <visual>
+        <origin xyz="0.035 0 0" rpy="0 0 0"/>
+        <geometry><box size="0.07 0.02 0.015"/></geometry>
+        <material name="grey"/>
+      </visual>
+      <collision>
+        <origin xyz="0.035 0 0" rpy="0 0 0"/>
+        <geometry><box size="0.07 0.02 0.015"/></geometry>
+      </collision>
+      <inertial><mass value="0.05"/><inertia ixx="1e-4" ixy="0" ixz="0" iyy="1e-4" iyz="0" izz="1e-4"/></inertial>
+    </link>
+
+    <joint name="${prefix}_hip_pitch" type="revolute">
+      <parent link="${prefix}_hip"/><child link="${prefix}_limb"/>
+      <origin xyz="0.0165 0 0" rpy="0 0 0"/>
+      <axis xyz="0 1 0"/>
+      <limit lower="-1.57" upper="1.57" effort="5.0" velocity="2.0"/>
+    </joint>
+
+    <link name="${prefix}_leg">
+      <visual>
+        <origin xyz="0.05 0 -0.015" rpy="0 0.5 0"/>
+        <geometry><box size="0.11 0.015 0.012"/></geometry>
+        <material name="black"/>
+      </visual>
+      <collision>
+        <origin xyz="0.05 0 -0.015" rpy="0 0.5 0"/>
+        <geometry><box size="0.11 0.015 0.012"/></geometry>
+      </collision>
+      <inertial><mass value="0.05"/><inertia ixx="1e-4" ixy="0" ixz="0" iyy="1e-4" iyz="0" izz="1e-4"/></inertial>
+    </link>
+
+    <joint name="${prefix}_knee" type="revolute">
+      <parent link="${prefix}_limb"/><child link="${prefix}_leg"/>
+      <origin xyz="0.07 0 0" rpy="0 0 0"/>
+      <axis xyz="0 1 0"/>
+      <limit lower="-2.5" upper="2.5" effort="5.0" velocity="2.0"/>
+    </joint>
+
+    <gazebo reference="${prefix}_leg">
+      <mu1>3.0</mu1><mu2>3.0</mu2>
+      <kp>1000000.0</kp><kd>10.0</kd>
+    </gazebo>
+  </xacro:macro>
+
+  <xacro:spider_leg prefix="FL" x_dist="0.0475"  y_dist="0.0475"  yaw_angle="0.785"/>
+  <xacro:spider_leg prefix="FR" x_dist="0.0475"  y_dist="-0.0475" yaw_angle="-0.785"/>
+  <xacro:spider_leg prefix="RL" x_dist="-0.0475" y_dist="0.0475"  yaw_angle="2.355"/>
+  <xacro:spider_leg prefix="RR" x_dist="-0.0475" y_dist="-0.0475" yaw_angle="-2.355"/>
+
+  <ros2_control name="gz_ros2_control" type="system">
+    <hardware><plugin>gz_ros2_control/GazeboSimSystem</plugin></hardware>
+    <xacro:macro name="joint_interface" params="name init_val">
+      <joint name="${name}">
+        <command_interface name="position"/>
+        <state_interface name="position"><param name="initial_value">${init_val}</param></state_interface>
+        <state_interface name="velocity"/>
+      </joint>
+    </xacro:macro>
+    <xacro:joint_interface name="FL_hip_yaw" init_val="0.0"/><xacro:joint_interface name="FL_hip_pitch" init_val="-0.9"/><xacro:joint_interface name="FL_knee" init_val="1.6"/>
+    <xacro:joint_interface name="FR_hip_yaw" init_val="0.0"/><xacro:joint_interface name="FR_hip_pitch" init_val="-0.9"/><xacro:joint_interface name="FR_knee" init_val="1.6"/>
+    <xacro:joint_interface name="RL_hip_yaw" init_val="0.0"/><xacro:joint_interface name="RL_hip_pitch" init_val="-0.9"/><xacro:joint_interface name="RL_knee" init_val="1.6"/>
+    <xacro:joint_interface name="RR_hip_yaw" init_val="0.0"/><xacro:joint_interface name="RR_hip_pitch" init_val="-0.9"/><xacro:joint_interface name="RR_knee" init_val="1.6"/>
+  </ros2_control>
+
+  <gazebo>
+    <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
+      <parameters>$(find dummy_spider)/config/ros2_controllers.yaml</parameters>
+    </plugin>
+  </gazebo>
+
+</robot>

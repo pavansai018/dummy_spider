@@ -1,3 +1,4 @@
+
 # Dummy Spider Robot Simulation
 
 A 12-DOF quadruped robot simulation built with **ROS 2 Jazzy Jalisco** and **Gazebo Harmonic**. This project demonstrates multi-legged locomotion, featuring a stable 360-degree rotation (turning in place) and a coordinated forward walking gait using diagonal-pair synchronization.
@@ -61,3 +62,4 @@ python3 src/dummy_spider/dummy_spider/spider_node.py
 ```bash
 python3 src/dummy_spider/dummy_spider/spider_walk.py
 ```
+

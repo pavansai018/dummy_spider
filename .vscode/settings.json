@@ -1,0 +1,18 @@
+{
+    "python.autoComplete.extraPaths": [
+        "/home/siva/ros2_ws/install/turtle_controller/lib/python3.12/site-packages",
+        "/home/siva/ros2_ws/install/spiderbytes/lib/python3.12/site-packages",
+        "/home/siva/ros2_ws/install/my_py_pkg/lib/python3.12/site-packages",
+        "/home/siva/ros2_ws/install/my_robot_interfaces/lib/python3.12/site-packages",
+        "/home/siva/ros2_ws/install/dummy_spider/lib/python3.12/site-packages",
+        "/opt/ros/jazzy/lib/python3.12/site-packages"
+    ],
+    "python.analysis.extraPaths": [
+        "/home/siva/ros2_ws/install/turtle_controller/lib/python3.12/site-packages",
+        "/home/siva/ros2_ws/install/spiderbytes/lib/python3.12/site-packages",
+        "/home/siva/ros2_ws/install/my_py_pkg/lib/python3.12/site-packages",
+        "/home/siva/ros2_ws/install/my_robot_interfaces/lib/python3.12/site-packages",
+        "/home/siva/ros2_ws/install/dummy_spider/lib/python3.12/site-packages",
+        "/opt/ros/jazzy/lib/python3.12/site-packages"
+    ]
+}
