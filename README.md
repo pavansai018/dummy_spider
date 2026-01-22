@@ -11,7 +11,7 @@ The robot coordinates diagonal pairs to rotate the base plate while maintaining 
 
 | Camera View | 3rd Person View |
 | :---: | :---: |
-| ![Spin Cam](videos/spin_camera.gif) | ![Spin 3rd Person](videos/spin_3p.gif) |
+| ![spin_camera](https://github.com/user-attachments/assets/7ba4ba52-1c63-4e49-9340-8d0d55a76c89) | ![spin_3p](https://github.com/user-attachments/assets/45ac9200-c7da-4a90-b4b1-2263e5c8be55) |
 
 ### 2. Forward Walk
 The robot uses a stepping gait to move toward the front. The legs push backward while in contact with the ground (stance) and swing forward while lifted (swing).
