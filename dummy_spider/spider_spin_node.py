@@ -16,7 +16,7 @@ class SpiderRotate(Node):
         self.timer = self.create_timer(self.timer_period, self.rotate_loop)
         
         self.t = 0.0
-        # Values from your Xacro to maintain height
+        # Values from Xacro to maintain height
         self.stand_pitch = -0.9
         self.stand_knee = 1.6
 
@@ -38,7 +38,7 @@ class SpiderRotate(Node):
             'RL': (self.t * speed) + math.pi
         }
 
-        # Order must match your YAML: FL, FR, RR, RL
+        # Order must match YAML: FL, FR, RR, RL
         leg_order = ['FL', 'FR', 'RR', 'RL']
         full_command = []
 

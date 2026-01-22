@@ -7,7 +7,7 @@ class SpiderForwardWalk(Node):
     def __init__(self):
         super().__init__('spider_forward_walk')
         
-        # Publisher to match your position_controller
+        # Publisher to match position_controller
         self.publisher_ = self.create_publisher(
             Float64MultiArray, 
             '/position_controller/commands', 
@@ -17,7 +17,7 @@ class SpiderForwardWalk(Node):
         self.timer = self.create_timer(self.timer_period, self.walk_loop)
         
         self.t = 0.0
-        # Starting pose from your Xacro
+        # Starting pose from Xacro
         self.stand_pitch = -0.9
         self.stand_knee = 1.6
 
@@ -37,7 +37,7 @@ class SpiderForwardWalk(Node):
             'RL': (self.t * speed) + math.pi
         }
 
-        # Order must match your YAML: FL, FR, RR, RL
+        # Order must match YAML: FL, FR, RR, RL
         leg_order = ['FL', 'FR', 'RR', 'RL']
         full_command = []
 

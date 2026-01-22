@@ -33,7 +33,7 @@ def generate_launch_description():
         output='screen'
     )
 
-    # Replace your bridge node with this:
+    # Bridge node
     bridge = Node(
         package='ros_gz_bridge',
         executable='parameter_bridge',

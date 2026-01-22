@@ -7,7 +7,7 @@ class SpiderSpin(Node):
     def __init__(self):
         super().__init__('spider_spin_node')
         
-        # Publisher for your position_controller
+        # Publisher for position_controller
         self.publisher_ = self.create_publisher(
             Float64MultiArray, 
             '/position_controller/commands', 
@@ -18,7 +18,7 @@ class SpiderSpin(Node):
         
         self.t = 0.0
         
-        # Static standing posture from your Xacro initial values
+        # Static standing posture from Xacro initial values
         self.stand_pitch = -0.9
         self.stand_knee = 1.6
 
@@ -31,11 +31,10 @@ class SpiderSpin(Node):
         speed = 2.0      
         
         # Calculate the yaw offset using a sine wave for a smooth back-and-forth spin
-        # If you want it to walk in a circle, you'd need a stepping gait.
         # This keeps feet planted and rotates the torso.
         yaw_val = math.sin(self.t * speed) * amplitude
         
-        # The command array must follow your YAML order:
+        # The command array must follow YAML order:
         # 1. FL (yaw, pitch, knee)
         # 2. FR (yaw, pitch, knee)
         # 3. RR (yaw, pitch, knee)
