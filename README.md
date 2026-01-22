@@ -9,16 +9,19 @@ A 12-DOF quadruped robot simulation built with **ROS 2 Jazzy Jalisco** and **Gaz
 ### 1. 360° Spin (Rotation on Axis)
 The robot coordinates diagonal pairs to rotate the base plate while maintaining a stable center of mass.
 
-| Camera View | 3rd Person View |
-| :---: | :---: |
-| ![spin_camera](https://github.com/user-attachments/assets/7ba4ba52-1c63-4e49-9340-8d0d55a76c89) | ![spin_3p](https://github.com/user-attachments/assets/45ac9200-c7da-4a90-b4b1-2263e5c8be55) |
+Camera View 
+[spin_camera.webm](https://github.com/user-attachments/assets/6a672424-7f4e-47fe-a1cd-0d11a21393b2)
+
+3rd Person View
+[spin_3p.webm](https://github.com/user-attachments/assets/77e3b3b8-fbbb-4029-b53e-ff499c885066)
 
 ### 2. Forward Walk
 The robot uses a stepping gait to move toward the front. The legs push backward while in contact with the ground (stance) and swing forward while lifted (swing).
 
-| Camera View | 3rd Person View |
-| :---: | :---: |
-| ![Walk Cam](videos/walk_camera.gif) | ![Walk 3rd Person](videos/walk_3p.gif) |
+Camera View 
+[walk_camera.webm](https://github.com/user-attachments/assets/16852040-6140-405d-a2e2-6b0de0ae403d)
+3rd Person View
+[walk_camera.webm](https://github.com/user-attachments/assets/e422677f-d7ff-4697-b2e3-a778e9e2fc8b)
 
 ---
 
