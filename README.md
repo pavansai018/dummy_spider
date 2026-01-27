@@ -10,7 +10,7 @@ A 12-DOF quadruped robot simulation built with **ROS 2 Jazzy Jalisco** and **Gaz
 ### 1. Virtual Joystick Control
 This video highlights the transition from scripted sequences to real-time interactive control. By running the spider_controller alongside the virtual_joy GUI, the robot can dynamically mix longitudinal, lateral, and rotational velocities. Notice the smooth transitions between movement directions, managed by the controller's gait-blending logic to prevent tipping or joint jitter.
 
-<video controls src="Videos/Full Control.mp4" title="Full Control of Spider using Joystick"></video>
+![Full Control](https://github.com/user-attachments/assets/54c56b72-7729-4e2e-b010-8aa596908e1f)
 
 
 ### 1. 360° Spin (Rotation on Axis)
