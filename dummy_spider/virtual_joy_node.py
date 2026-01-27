@@ -16,6 +16,7 @@ W: Forward    S: Backward
 A: Left       D: Right
 I: Spawn (0°) K: 180°
 J: -90°       L: 90°
+H: Home
 Space: Stop   Ctrl+C: Quit
 ---------------------------
 """)
@@ -32,6 +33,7 @@ Space: Stop   Ctrl+C: Quit
             while rclpy.ok():
                 key = self.get_key().lower()
                 cmd = String()
+                
                 if key == 'w': cmd.data = "FORWARD"
                 elif key == 's': cmd.data = "BACKWARD"
                 elif key == 'a': cmd.data = "LEFT"
@@ -40,10 +42,12 @@ Space: Stop   Ctrl+C: Quit
                 elif key == 'k': cmd.data = "TURN_180"
                 elif key == 'j': cmd.data = "TURN_-90"
                 elif key == 'l': cmd.data = "TURN_90"
+                elif key == 'h': cmd.data = "HOME"
                 elif key == ' ': cmd.data = "STOP"
                 elif key == '\x03': break
                 
                 if cmd.data:
+                    print(f"[VirtualJoy] Key pressed: {key.upper()} -> Command: {cmd.data}")
                     self.publisher_.publish(cmd)
         except Exception as e:
             print(e)
@@ -53,3 +57,6 @@ def main():
     node = VirtualJoy()
     node.run()
     rclpy.shutdown()
+
+if __name__ == '__main__':
+    main()
