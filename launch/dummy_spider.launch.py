@@ -37,10 +37,11 @@ def generate_launch_description():
     bridge = Node(
         package='ros_gz_bridge',
         executable='parameter_bridge',
-        parameters=[{
-            'config_file': os.path.join(pkg_path, 'config', 'bridge_config.yaml'),
-            'use_sim_time': True
-        }],
+        arguments=['/clock@rosgraph_msgs/msg/Clock[ignition.msgs.Clock',
+                   '/imu/data@sensor_msgs/msg/Imu@gz.msgs.IMU',
+                   '/camera/image_raw@sensor_msgs/msg/Image@gz.msgs.Image',
+                   '/camera/camera_info@sensor_msgs/msg/CameraInfo@gz.msgs.CameraInfo',
+                   ],
         output='screen'
     )
 
