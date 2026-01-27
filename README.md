@@ -7,6 +7,12 @@ A 12-DOF quadruped robot simulation built with **ROS 2 Jazzy Jalisco** and **Gaz
 
 ## Locomotion Demonstrations
 
+### 1. Virtual Joystick Control
+This video highlights the transition from scripted sequences to real-time interactive control. By running the spider_controller alongside the virtual_joy GUI, the robot can dynamically mix longitudinal, lateral, and rotational velocities. Notice the smooth transitions between movement directions, managed by the controller's gait-blending logic to prevent tipping or joint jitter.
+
+![Controller] <video controls src="Videos/Full Control.mp4" title="Full Control of Spider using Joystick"></video>
+
+
 ### 1. 360° Spin (Rotation on Axis)
 The robot coordinates diagonal pairs to rotate the base plate while maintaining a stable center of mass.
 
@@ -54,12 +60,44 @@ ros2 launch dummy_spider dummy_spider.launch.py
 ### 3. Execute Nodes
 In a new terminal (sourced with your workspace), run one of the following commands to move the spider:
 
-#### To Rotate 360° on Axis:
+#### Phase A: Initialization & Calibration
+##### Set Home Position
+It is recommended to bring the robot to its default stance and perform a safety check before locomotion.
 ```bash
-python3 src/dummy_spider/dummy_spider/spider_node.py
+ros2 run dummy_spider home_position
 ```
-#### To Walk Forward:
+##### Surround Check
+The robot performs a leaning sequence to verify joint range of motion and environmental clearance.
 ```bash
-python3 src/dummy_spider/dummy_spider/spider_walk.py
+ros2 run dummy_spider surround_check
 ```
 
+#### Phase B: Basic Locomotion
+##### Forward Walk:
+Executes the diagonal-pair synchronized forward gait.
+```bash
+ros2 run dummy_spider forward_walk
+```
+##### Side Walk:
+Moves the robot laterally (strafing) without changing its orientation.
+```bash
+ros2 run dummy_spider side_walk
+```
+##### Spider Spin:
+Performs a stable 360° rotation on the center axis.
+```bash
+ros2 run dummy_spider spider_spin
+```
+
+#### Phase C: Full Control & Interaction
+Use the integrated controller to drive the spider dynamically via a virtual interface.
+##### Spider Controller:
+The "brain" node that listens for velocity commands and translates them into real-time leg IK/gaits.
+```bash
+ros2 run dummy_spider spider_controller
+```
+##### Virtual Joystick:
+Launches a GUI-based joystick to drive the spider manually.
+```bash
+ros2 run dummy_spider virtual_joy
+```
