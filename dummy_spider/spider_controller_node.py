@@ -72,7 +72,6 @@ class SpiderController(Node):
         self.current_command = cmd
 
         if cmd in ["TURN_0", "TURN_90", "TURN_180", "TURN_-90"]:
-            # J/L Fix: targets swapped to match your virtual joy
             targets = {"TURN_0": 0.0, "TURN_90": -math.pi/2, "TURN_180": math.pi, "TURN_-90": math.pi/2}
             self.yaw_target = targets[cmd]
             self.spin_active = True
@@ -114,11 +113,11 @@ class SpiderController(Node):
             yaw, pitch, knee = 0.0, self.stand_pitch, self.stand_knee
             if phase < math.pi:
                 lift = math.sin(phase) * 0.45
-                yaw = math.cos(phase) * self.turn_angle * direction # Fixed I/K sign
+                yaw = math.cos(phase) * self.turn_angle * direction 
                 pitch += lift
                 knee -= lift
             else:
-                yaw = math.cos(phase) * self.turn_angle * direction # Fixed I/K sign
+                yaw = math.cos(phase) * self.turn_angle * direction 
             full_command.extend([yaw, pitch, knee])
 
         self.pub_.publish(Float64MultiArray(data=full_command))
@@ -136,7 +135,6 @@ class SpiderController(Node):
         if self.current_speed < self.target_speed:
             self.current_speed += self.acceleration
 
-        # RESTORED ORIGINAL GAIT LOGIC
         if self.current_command in ["FORWARD","BACKWARD"]:
             direction = -1.0 if self.current_command == "FORWARD" else 1.0
             leg_phases = {
@@ -155,7 +153,7 @@ class SpiderController(Node):
                 'RR': self.t * self.current_speed + math.pi,
                 'FL': self.t * self.current_speed + math.pi
             }
-            leg_order = ['FR','RR','RL','FL'] # Your original order
+            leg_order = ['FR','RR','RL','FL'] 
 
         full_command = []
         for leg in leg_order:
