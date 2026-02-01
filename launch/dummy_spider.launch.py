@@ -41,6 +41,11 @@ def generate_launch_description():
                    '/imu/data@sensor_msgs/msg/Imu@gz.msgs.IMU',
                    '/camera/image_raw@sensor_msgs/msg/Image@gz.msgs.Image',
                    '/camera/camera_info@sensor_msgs/msg/CameraInfo@gz.msgs.CameraInfo',
+                   '/tf@tf2_msgs/msg/TFMessage[ignition.msgs.Pose_V',
+                   '/joint_states@sensor_msgs/msg/JointState[gz.msgs.Model',
+                   '/scan@sensor_msgs/msg/LaserScan@gz.msgs.LaserScan',
+                   '/odom@nav_msgs/msg/Odometry@gz.msgs.Odometry',
+
                    ],
         output='screen'
     )
