@@ -32,7 +32,7 @@ setup(
         'console_scripts': [
             'home_position = dummy_spider.home_position_node:main',
             'surround_check = dummy_spider.camera_movement_node:main',
-            'forward_walk = dummy_spider.spider__forward_walk_node:main',
+            'forward_walk = dummy_spider.spider_forward_walk_node:main',
             'side_walk = dummy_spider.spider_side_walk_node:main',
             'spider_spin = dummy_spider.spider_spin_node:main',
             'spider_controller = dummy_spider.spider_controller_node:main',

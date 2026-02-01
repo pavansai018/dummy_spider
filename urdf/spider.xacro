@@ -217,6 +217,65 @@
     <!-- <plugin filename="gz-sim-imu-system" name="gz::sim::systems::Imu"> -->
     <plugin filename="libignition-gazebo-imu-system" name="ignition::gazebo::systems::Imu"/>  
   </gazebo>
-  
 
+  <link name="lidar_link">
+      <visual>
+          <origin xyz="0 0 0" rpy="0 0 3.1415"/>
+          <geometry>
+              <cylinder radius="0.02" length="0.02"/>
+          </geometry>
+      </visual>
+
+      <collision>
+          <origin xyz="0 0 0" rpy="-1.57 0 3.1415"/>
+          <geometry>
+              <cylinder radius="0.02" length="0.02"/>
+          </geometry>
+      </collision>
+        <self_collide>false</self_collide>
+  </link>
+
+  <joint name="lidar_to_payload" type="fixed">
+      <parent link="base_link"/>
+      <child link="lidar_link"/>
+      <origin xyz="0 0 0.065" rpy="0 0 3.1415"/>
+  </joint>
+
+  <gazebo reference="lidar_link">
+      <sensor name='gpu_lidar' type='gpu_lidar'>
+          <pose>0 0 0 0 0 0</pose>
+          <topic>scan</topic>
+          <frame_name>lidar_link</frame_name>
+          <gz_frame_id>lidar_link</gz_frame_id>
+          <update_rate>2</update_rate>
+          <lidar>
+              <scan>
+              <horizontal>
+                  <samples>720</samples>
+                  <resolution>1</resolution>
+                  <min_angle>-3.14159</min_angle>
+                  <max_angle>3.14159</max_angle>
+              </horizontal>
+              <vertical>
+                  <samples>1</samples>
+                  <resolution>1</resolution>
+                  <min_angle>0.0</min_angle>
+                  <max_angle>0.0</max_angle>
+              </vertical>
+              </scan>
+              <range>
+                  <min>0.01</min>
+                  <max>12.0</max>
+                  <resolution>0.005</resolution>
+              </range>
+              <noise>
+                  <type>gaussian</type>
+                  <mean>0.0</mean>
+                  <stddev>0.001</stddev>
+              </noise>
+          </lidar>
+          <always_on>true</always_on>
+          <visualize>true</visualize>
+      </sensor>
+  </gazebo>
 </robot>
